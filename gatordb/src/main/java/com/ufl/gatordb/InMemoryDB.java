@@ -1,7 +1,7 @@
 package com.ufl.gatordb;
 
 interface InMemoryDB {
-  public int get(String key) throws ValueNotFoundInDb;
+  public Integer get(String key);
 
   public void put(String key, int value) throws NoOpenTransaction;
 
@@ -10,12 +10,6 @@ interface InMemoryDB {
   public void commit() throws NoOpenTransaction;
 
   public void rollback() throws NoOpenTransaction;
-
-  public static class ValueNotFoundInDb extends Exception {
-    public ValueNotFoundInDb(String message) {
-      super(message);
-    }
-  }
 
   public static class NoOpenTransaction extends Exception {
     public NoOpenTransaction(String message) {

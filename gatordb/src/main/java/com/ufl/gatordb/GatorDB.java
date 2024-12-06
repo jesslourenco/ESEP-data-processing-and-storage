@@ -11,9 +11,9 @@ class GatorDB implements InMemoryDB {
   }
 
   @Override
-  public int get(String key) throws ValueNotFoundInDb {
+  public Integer get(String key) {
     if (!db.containsKey(key)) {
-      throw new ValueNotFoundInDb("Entry with this key does not exist in database.");
+      return null;
     }
     return db.get(key);
   }

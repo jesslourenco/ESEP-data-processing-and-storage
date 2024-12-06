@@ -51,12 +51,8 @@ public class App {
           System.out.print("Key: ");
           String key = sc.next();
 
-          try {
-            int value = db.get(key);
-            System.out.println(value);
-          } catch (InMemoryDB.ValueNotFoundInDb e) {
-            System.out.println("null");
-          }
+          Integer value = db.get(key);
+          System.out.println(value);
         }
 
         case 2 -> {
