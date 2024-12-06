@@ -75,7 +75,7 @@ public class App {
 
           try {
             db.put(key, value);
-            System.out.println("Success: entry added to the database.");
+            System.out.println("Success: entry added to transaction.");
           } catch (InMemoryDB.NoOpenTransaction e) {
             System.out.println(e.getMessage());
           } catch (InputMismatchException e) {
@@ -87,7 +87,7 @@ public class App {
 
         case 4 -> {
           // Commit
-          System.out.println("Committing your changes...");
+          System.out.println("Committing your changes to the database...");
 
           try {
             db.commit();
