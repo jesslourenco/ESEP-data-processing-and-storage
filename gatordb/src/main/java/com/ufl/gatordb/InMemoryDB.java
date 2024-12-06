@@ -1,13 +1,31 @@
 package com.ufl.gatordb;
 
-interface inMemoryDB {
-  int get(String key);
+interface InMemoryDB {
+  public int get(String key) throws ValueNotFoundInDb;
 
-  void put(String key, int val);
+  public void put(String key, int value) throws NoOpenTransaction;
 
-  void begin_transaction();
+  public void begin_transaction() throws MultipleTransactions;
 
-  void commit();
+  public void commit() throws NoOpenTransaction;
 
-  void rollback();
+  public void rollback() throws NoOpenTransaction;
+
+  public static class ValueNotFoundInDb extends Exception {
+    public ValueNotFoundInDb(String message) {
+      super(message);
+    }
+  }
+
+  public static class NoOpenTransaction extends Exception {
+    public NoOpenTransaction(String message) {
+      super(message);
+    }
+  }
+
+  public static class MultipleTransactions extends Exception {
+    public MultipleTransactions(String message) {
+      super(message);
+    }
+  }
 }

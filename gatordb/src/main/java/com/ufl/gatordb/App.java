@@ -1,5 +1,6 @@
 package com.ufl.gatordb;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App {
@@ -22,9 +23,10 @@ public class App {
 
     GatorDB db = new GatorDB();
     Scanner sc = new Scanner(System.in);
+    int op;
 
     outerLoop: for (;;) {
-      System.out.println("Select your operation: ");
+      System.out.println("Menu ");
       System.out.println("1. Get - Retrieve a value given a key");
       System.out.println("2. Begin a Transaction");
       System.out.println("3. Put - Create or Update an entry");
@@ -34,31 +36,41 @@ public class App {
 
       System.out.println();
 
-      int op = sc.nextInt();
+      try {
+        System.out.println("Select your operation: ");
+        op = sc.nextInt();
+      } catch (InputMismatchException e) {
+        System.out.println("Please provide an integer value");
+        sc.next();
+        continue;
+      }
 
       switch (op) {
         case 1 -> {
+          // Get
           System.out.print("Key: ");
           String key = sc.next();
 
           try {
             int value = db.get(key);
             System.out.println(value);
-          } catch (Exception e) {
+          } catch (InMemoryDB.ValueNotFoundInDb e) {
             System.out.println("null");
           }
         }
 
         case 2 -> {
           try {
+            // Start transaction
             db.begin_transaction();
             System.out.println("Success: new transaction started.");
-          } catch (Exception e) {
-            System.out.println("Failure: a transaction already exists.");
+          } catch (InMemoryDB.MultipleTransactions e) {
+            System.out.println(e.getMessage());
           }
         }
 
         case 3 -> {
+          // Put
           System.out.print("Key: ");
           String key = sc.next();
 
@@ -68,41 +80,48 @@ public class App {
           try {
             db.put(key, value);
             System.out.println("Success: entry added to the database.");
-          } catch (Exception e) {
-            System.out.println("Failure: no transaction in progress.");
+          } catch (InMemoryDB.NoOpenTransaction e) {
+            System.out.println(e.getMessage());
+          } catch (InputMismatchException e) {
+            System.out.println("Failure: Invalid value for entry (must be an integer).");
+            sc.next();
+            continue;
           }
         }
 
         case 4 -> {
+          // Commit
           System.out.println("Committing your changes...");
 
           try {
             db.commit();
             System.out.println("Success");
-          } catch (Exception e) {
-            System.out.println("Failure: no transaction in progress.");
+          } catch (InMemoryDB.NoOpenTransaction e) {
+            System.out.println(e.getMessage());
           }
         }
 
         case 5 -> {
+          // Rollback
           System.out.println("Rolling back your changes...");
 
           try {
             db.rollback();
             System.out.println("Success");
-          } catch (Exception e) {
-            System.out.println("Failure: no transaction in progress.");
+          } catch (InMemoryDB.NoOpenTransaction e) {
+            System.out.println(e.getMessage());
           }
         }
 
         case 6 -> {
+          // Exit
           System.out.println("Thanks for using GatorDB! Goodbye.");
           sc.close();
           break outerLoop;
         }
 
         default -> {
-          System.out.println("Please select a valid option");
+          System.out.println("Invalid option.");
         }
       }
 
