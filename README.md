@@ -1,5 +1,10 @@
 # GatorDB: An In-Memory Database With Transaction Support
 # About
+Transactions are an important part of relational databases. They allow “all or nothing” database updates to prevent dirty writes. 
+
+In this project, we learn about transactions by implementing an in-memory database. 
+The assignment is for the Enterprise Software Engineering Practices class at the University of Florida. 
+
 ## Functionality
 - `begin_transaction()`: Starts a new transaction. Note that only a single transaction may exist at a time.
 - `put(key, value)`: Adds or updates an entry. It must be done within a transaction.
@@ -58,6 +63,8 @@ If IntelliJ doesn’t prompt you:
 2. Click on the green play button (it's located in the file itself and the top right corner of IntelliJ. Either works)
 3. IntelliJ will open a terminal window. You can interact with the CLI in there.
 
+<img width="1727" alt="image" src="https://github.com/user-attachments/assets/9b04cbe2-fc1d-4347-af83-61c7b6d9bec2">
+
 ## Running In The Terminal
 #### Step 1: Clone the Repository
 For SSH, you can run `git clone git@github.com:jesslourenco/ESEP-data-processing-and-storage.git`
@@ -67,6 +74,9 @@ For SSH, you can run `git clone git@github.com:jesslourenco/ESEP-data-processing
 2. Run the Maven lifecycle with `mvn install`. The automated tests will run automatically and show the results.
 3. Run the application with `java -cp target/gatordb-1.0-SNAPSHOT.jar com.ufl.gatordb.App`
 4. Interact with the CLI.
+
+<img width="754" alt="image" src="https://github.com/user-attachments/assets/96a45dae-6682-4789-b634-e02de3b378cd">
+
 
 # Recommendations To Make This An "Official" Assignment at UF
 - Limit students to using Java, Python, or C++ since those are languages taught during the program, and graders should already be familiar with them.
